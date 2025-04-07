@@ -18,4 +18,13 @@ class DaggerAppComponentFactory : AppComponentFactory() {
 
     @Inject
     lateinit var map: Map<Class<out Activity>, @JvmSuppressWildcards Provider<Activity>>
+
+    override fun instantiateActivityCompat(
+        cl: ClassLoader,
+        className: String,
+        intent: Intent?
+    ): Activity {
+        val activity = super.instantiateActivityCompat(cl, className, intent)
+        return map[activity::class.java]?.get() ?: activity
+    }
 }
