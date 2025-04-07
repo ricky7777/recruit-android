@@ -2,18 +2,18 @@ package nz.co.test.transactions.room
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.util.Date
+import java.math.BigDecimal
+import java.time.OffsetDateTime
 
 /**
- * @author Ricky Chen
- * This is data class for transaction data
- * receiver raw data from api and convert to room entity
+ *  This is data class for transaction data
+ *  receiver raw data from api and convert to room entity
  */
 @Entity(tableName = "transactions")
 data class Transaction(
     @PrimaryKey val id: Int,
-    val transactionDate: Date,
+    val transactionDate: OffsetDateTime,
     val summary: String,
-    val debit: Double,
-    val credit: Double
+    val debit: BigDecimal,
+    val credit: BigDecimal
 )
