@@ -1,4 +1,4 @@
-package nz.co.test.transactions.utils
+package nz.co.test.transactions.widget
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.CircularProgressIndicator

@@ -8,9 +8,10 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import nz.co.test.transactions.di.network.TransactionsRepository
 import nz.co.test.transactions.room.Transaction
-import javax.inject.Inject
+import nz.co.test.transactions.utils.MathUtils.toNZFormattedString
+import java.math.BigDecimal
 
-class TransactionsViewModel @Inject constructor(
+class TransactionsViewModel(
     private val repository: TransactionsRepository
 ) : ViewModel() {
 
@@ -22,9 +23,17 @@ class TransactionsViewModel @Inject constructor(
             try {
                 _transactions.value = repository.getTransactions()
             } catch (e: Exception) {
-                // error handling
-                Log.i("", e.printStackTrace().toString())
+                // TODO error handling
+                Log.e("Error", Log.getStackTraceString(e))
             }
         }
+    }
+
+    fun getTotalAmountText(): String {
+        val currentTransactions = _transactions.value ?: return "0"
+        val total: BigDecimal = currentTransactions.fold(BigDecimal.ZERO) { acc, transaction ->
+            acc.add(transaction.credit).subtract(transaction.debit)
+        }
+        return total.toNZFormattedString()
     }
 }

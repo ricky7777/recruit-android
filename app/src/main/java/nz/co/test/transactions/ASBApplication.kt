@@ -4,18 +4,17 @@ import android.app.Application
 import androidx.room.Room
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import nz.co.test.transactions.di.network.TransactionsRepository
+import nz.co.test.transactions.di.network.TransactionsRepositoryImpl
 import nz.co.test.transactions.room.ASBAppDatabase
 import nz.co.test.transactions.room.OffsetDateTimeDeserializer
 import nz.co.test.transactions.services.TransactionsService
+import nz.co.test.transactions.viewmodel.TransactionsViewModel
 import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import org.koin.androidx.viewmodel.dsl.viewModel
-
-import nz.co.test.transactions.viewmodel.TransactionsViewModel
 import java.time.OffsetDateTime
 
 class ASBApplication : Application() {
@@ -54,7 +53,7 @@ class ASBApplication : Application() {
         }
 
         val repositoryModule = module {
-            single { TransactionsRepository(get(), get()) }
+            single { TransactionsRepositoryImpl(get(), get()) }
         }
 
         val viewModelModule = module {
