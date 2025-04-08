@@ -7,12 +7,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import nz.co.test.transactions.di.network.TransactionsRepository
+import nz.co.test.transactions.di.network.TransactionsRepositoryImpl
 import nz.co.test.transactions.room.Transaction
 import nz.co.test.transactions.utils.MathUtils.toNZFormattedString
 import java.math.BigDecimal
 
 class TransactionsViewModel(
-    private val repository: TransactionsRepository
+    private val repository: TransactionsRepositoryImpl
 ) : ViewModel() {
 
     private val _transactions = MutableLiveData<List<Transaction>>()

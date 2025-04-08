@@ -23,7 +23,9 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -33,10 +35,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import nz.co.test.transactions.R
 import nz.co.test.transactions.fake.DummyData
 import nz.co.test.transactions.room.Transaction
 import nz.co.test.transactions.utils.MathUtils.toNZFormattedString
+import nz.co.test.transactions.viewmodel.TransactionsViewModel
 import nz.co.test.transactions.widget.LoadingBar
 import java.math.BigDecimal
 import java.time.format.DateTimeFormatter
@@ -46,11 +50,16 @@ import java.time.format.DateTimeFormatter
  * Transaction Screen
  */
 @Composable
-fun TransactionScreen(transactions: List<Transaction>?, totalAmountText: String) {
+fun TransactionScreen(transactionsViewModel: TransactionsViewModel) {
+    val transactions by transactionsViewModel.transactions.observeAsState(emptyList())
+    val totalAmount by remember(transactions) {
+        derivedStateOf { transactionsViewModel.getTotalAmountText() }
+    }
+
     var selectedTransaction by remember { mutableStateOf<Transaction?>(null) }
 
     Scaffold(backgroundColor = Color.Black) { innerPadding ->
-        if (transactions.isNullOrEmpty()) {
+        if (transactions.isEmpty()) {
             LoadingScreen(innerPadding)
         } else {
             Column(
@@ -83,7 +92,7 @@ fun TransactionScreen(transactions: List<Transaction>?, totalAmountText: String)
                         }
                         Spacer(modifier = Modifier.height(16.dp))
                         Text(
-                            text = totalAmountText,
+                            text = totalAmount,
                             style = MaterialTheme.typography.h4.copy(color = Color.White)
                         )
                     }
@@ -172,5 +181,5 @@ private fun TransactionRow(tx: Transaction, onClick: (Transaction) -> Unit) {
 @Composable
 private fun DefaultPreview() {
     val amount = BigDecimal(91236.459123).toNZFormattedString()
-    TransactionScreen(DummyData.dummyTransactions, amount)
+//    TransactionScreen(DummyData.dummyTransactions, amount)
 }
