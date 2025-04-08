@@ -8,23 +8,23 @@ import androidx.core.app.ComponentActivity
 import javax.inject.Inject
 import javax.inject.Provider
 
-class DaggerAppComponentFactory : AppComponentFactory() {
-
-    private val component = DaggerAppComponent.create()
-
-    init {
-        component.inject(this)
-    }
-
-    @Inject
-    lateinit var map: Map<Class<out Activity>, @JvmSuppressWildcards Provider<Activity>>
-
-    override fun instantiateActivityCompat(
-        cl: ClassLoader,
-        className: String,
-        intent: Intent?
-    ): Activity {
-        val activity = super.instantiateActivityCompat(cl, className, intent)
-        return map[activity::class.java]?.get() ?: activity
-    }
-}
+//class DaggerAppComponentFactory : AppComponentFactory() {
+//
+//    private val component = DaggerAppComponent.create()
+//
+//    init {
+//        component.inject(this)
+//    }
+//
+//    @Inject
+//    lateinit var map: Map<Class<out Activity>, @JvmSuppressWildcards Provider<Activity>>
+//
+//    override fun instantiateActivityCompat(
+//        cl: ClassLoader,
+//        className: String,
+//        intent: Intent?
+//    ): Activity {
+//        val activity = super.instantiateActivityCompat(cl, className, intent)
+//        return map[activity::class.java]?.get() ?: activity
+//    }
+//}

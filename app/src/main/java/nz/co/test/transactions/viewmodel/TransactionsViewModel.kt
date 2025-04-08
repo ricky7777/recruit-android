@@ -1,4 +1,6 @@
 package nz.co.test.transactions.viewmodel
+
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -21,6 +23,7 @@ class TransactionsViewModel @Inject constructor(
                 _transactions.value = repository.getTransactions()
             } catch (e: Exception) {
                 // error handling
+                Log.i("", e.printStackTrace().toString())
             }
         }
     }
