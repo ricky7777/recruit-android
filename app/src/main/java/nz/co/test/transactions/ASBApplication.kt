@@ -1,12 +1,10 @@
 package nz.co.test.transactions
 
 import android.app.Application
-import androidx.room.Room
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
+import nz.co.test.transactions.db.ASBAppDatabase
+import nz.co.test.transactions.db.DatabaseProvider
+import nz.co.test.transactions.di.network.NetworkProvider
 import nz.co.test.transactions.di.network.TransactionsRepositoryImpl
-import nz.co.test.transactions.room.ASBAppDatabase
-import nz.co.test.transactions.room.OffsetDateTimeDeserializer
 import nz.co.test.transactions.services.TransactionsService
 import nz.co.test.transactions.viewmodel.TransactionsViewModel
 import org.koin.android.ext.koin.androidContext
@@ -14,41 +12,26 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import java.time.OffsetDateTime
 
+/**
+ * @author Ricky Chen
+ * extends Application for retrofit/room/koin setting
+ */
 class ASBApplication : Application() {
-    companion object {
-        private const val BASE_URL =
-            "https://gist.githubusercontent.com/Josh-Ng/500f2716604dc1e8e2a3c6d31ad01830/raw/4d73acaa7caa1167676445c922835554c5572e82/"
-    }
-
-    val gson: Gson = GsonBuilder()
-        .registerTypeAdapter(OffsetDateTime::class.java, OffsetDateTimeDeserializer())
-        .create()
 
     override fun onCreate() {
         super.onCreate()
+        diSetting()
+    }
+
+    private fun diSetting(){
         val networkModule = module {
-            single {
-                Retrofit.Builder()
-                    .baseUrl(BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create(gson))
-                    .build()
-            }
+            single { NetworkProvider.provideRetrofit() }
             single<TransactionsService> { get<Retrofit>().create(TransactionsService::class.java) }
         }
 
         val roomModule = module {
-            single {
-                Room.databaseBuilder(
-                    androidContext(),
-                    ASBAppDatabase::class.java,
-                    "transaction_database"
-                )
-                    .fallbackToDestructiveMigration()
-                    .build()
-            }
+            single { DatabaseProvider.provideDatabase(androidContext()) }
             single { get<ASBAppDatabase>().transactionDao() }
         }
 

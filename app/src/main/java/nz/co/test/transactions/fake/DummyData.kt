@@ -2,7 +2,7 @@ package nz.co.test.transactions.fake
 
 import java.math.BigDecimal
 import java.time.OffsetDateTime
-import nz.co.test.transactions.room.Transaction
+import nz.co.test.transactions.db.Transaction
 
 class DummyData {
     companion object {

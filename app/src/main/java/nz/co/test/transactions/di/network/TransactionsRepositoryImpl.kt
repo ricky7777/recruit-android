@@ -3,8 +3,8 @@ package nz.co.test.transactions.di.network
 import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import nz.co.test.transactions.room.Transaction
-import nz.co.test.transactions.room.TransactionDao
+import nz.co.test.transactions.db.Transaction
+import nz.co.test.transactions.db.TransactionDao
 import nz.co.test.transactions.services.TransactionsService
 
 /**

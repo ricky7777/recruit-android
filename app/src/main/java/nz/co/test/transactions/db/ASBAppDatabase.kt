@@ -1,4 +1,4 @@
-package nz.co.test.transactions.room
+package nz.co.test.transactions.db
 
 import android.content.Context
 import androidx.room.Database

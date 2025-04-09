@@ -48,8 +48,8 @@ android {
 dependencies {
 
     // new library start
-    implementation "io.insert-koin:koin-android:4.0.4"
-    implementation "io.insert-koin:koin-androidx-compose:4.0.4"
+    implementation "io.insert-koin:koin-android:$koin"
+    implementation "io.insert-koin:koin-androidx-compose:$koin"
 
     implementation "androidx.compose.runtime:runtime-livedata:$runtime_livedata"
 
@@ -58,7 +58,7 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$gson"
 
     implementation "androidx.room:room-runtime:$room_version"
-    implementation 'androidx.compose.material3:material3-android:1.3.1'
+    implementation "androidx.compose.material3:material3-android:$compose_material3"
 //    implementation 'com.google.android.ads:mediation-test-suite:3.0.0'
 
     kapt "androidx.room:room-compiler:$room_version"
@@ -69,10 +69,6 @@ dependencies {
     implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
 
     implementation "androidx.activity:activity-compose:$activity_compose"
-
-    implementation "androidx.lifecycle:lifecycle-livedata-core-ktx:2.8.7"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.8.7"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.8.7"
 
     testImplementation "androidx.arch.core:core-testing:2.2.0"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2"

@@ -4,6 +4,7 @@ import android.app.Activity
 import dagger.MapKey
 import kotlin.reflect.KClass
 
+@Deprecated("Use Koin DI to replace")
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
 @MapKey

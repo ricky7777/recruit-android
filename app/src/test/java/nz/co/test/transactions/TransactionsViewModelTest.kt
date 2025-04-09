@@ -1,10 +1,9 @@
 package nz.co.test.transactions
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import nz.co.test.transactions.di.network.TransactionsRepository
-import nz.co.test.transactions.room.Transaction
+import nz.co.test.transactions.db.Transaction
 import nz.co.test.transactions.utils.MathUtils.toNZFormattedString
 import nz.co.test.transactions.viewmodel.TransactionsViewModel
 import org.junit.Assert.assertEquals

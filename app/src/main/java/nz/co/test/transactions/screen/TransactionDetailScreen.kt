@@ -16,11 +16,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import nz.co.test.transactions.fake.DummyData
-import nz.co.test.transactions.room.Transaction
+import nz.co.test.transactions.db.Transaction
+import nz.co.test.transactions.utils.DateUtils
 import nz.co.test.transactions.utils.MathUtils.toNZFormattedString
 import java.math.BigDecimal
 import java.math.RoundingMode
-import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -60,7 +60,7 @@ private fun TransactionDetailContent(transaction: Transaction) {
             .padding(16.dp)
     ) {
         Text(
-            text = "Details",
+            text = "Transaction Details",
             style = MaterialTheme.typography.titleLarge.copy(color = Color.White)
         )
         Spacer(modifier = Modifier.height(16.dp))
@@ -71,7 +71,7 @@ private fun TransactionDetailContent(transaction: Transaction) {
         Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = transaction.summary,
-            style = MaterialTheme.typography.bodyMedium.copy(color = Color.LightGray)
+            style = MaterialTheme.typography.bodyMedium.copy(color = Color.White)
         )
         Spacer(modifier = Modifier.height(16.dp))
         Text(
@@ -80,11 +80,11 @@ private fun TransactionDetailContent(transaction: Transaction) {
         )
         Spacer(modifier = Modifier.height(8.dp))
         val dateTimeString = transaction.transactionDate.format(
-            DateTimeFormatter.ofPattern("EEE dd MMM yyyy 'at' h:mma")
+            DateUtils.DATE_FORMATTER_DETAIL
         )
         Text(
             text = dateTimeString,
-            style = MaterialTheme.typography.bodyMedium.copy(color = Color.LightGray)
+            style = MaterialTheme.typography.bodyMedium.copy(color = Color.White)
         )
         Spacer(modifier = Modifier.height(16.dp))
         Text(
@@ -103,14 +103,16 @@ private fun TransactionDetailContent(transaction: Transaction) {
             text = "Amount",
             style = MaterialTheme.typography.titleMedium.copy(color = Color.White)
         )
+
         Spacer(modifier = Modifier.height(8.dp))
+
+        val amountColor = if (amount < BigDecimal.ZERO) Color.Red else Color.Green
         Text(
             text = amount.toNZFormattedString(),
-            style = MaterialTheme.typography.bodyMedium.copy(color = Color.LightGray)
+            style = MaterialTheme.typography.bodyMedium.copy(color = amountColor)
         )
         Spacer(modifier = Modifier.height(16.dp))
 
-        // 加入 GST 欄位
         Text(
             text = "GST(15%)",
             style = MaterialTheme.typography.titleMedium.copy(color = Color.White)
@@ -118,7 +120,7 @@ private fun TransactionDetailContent(transaction: Transaction) {
         Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = gst.toNZFormattedString(),
-            style = MaterialTheme.typography.bodyMedium.copy(color = Color.LightGray)
+            style = MaterialTheme.typography.bodyMedium.copy(color = Color.White)
         )
     }
 }

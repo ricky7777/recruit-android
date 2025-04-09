@@ -1,6 +1,6 @@
 package nz.co.test.transactions.di.network
 
-import nz.co.test.transactions.room.Transaction
+import nz.co.test.transactions.db.Transaction
 
 /**
  * @author Ricky Chen

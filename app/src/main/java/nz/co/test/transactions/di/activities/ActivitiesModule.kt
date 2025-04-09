@@ -6,6 +6,8 @@ import dagger.Provides
 import dagger.multibindings.IntoMap
 import nz.co.test.transactions.activities.MainActivity
 
+
+@Deprecated("Use Koin DI to replace")
 @Module
 class ActivitiesModule {
 
